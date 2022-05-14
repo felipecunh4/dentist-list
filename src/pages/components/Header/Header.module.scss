@@ -1,0 +1,63 @@
+.container {
+  width: 100%;
+
+  display: flex;
+
+  padding: 13px 89px;
+  box-sizing: border-box;
+
+  background-color: #0582ad;
+
+  .logoWrapper {
+    .logoLink {
+      display: flex;
+
+      align-items: center;
+
+      text-decoration: none;
+
+      .enterpriseName {
+        color: #fff;
+        font-size: 2.1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+
+        .me {
+          color: #36a1c6;
+        }
+      }
+    }
+  }
+
+  .contentWrapper {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    .itemsWrapper {
+      display: flex;
+  
+      justify-content: flex-end;
+
+      list-style-type: none;
+
+      .item {
+        position: relative;
+        
+        +.item {
+          margin-left: 13px;
+        }
+
+        .link {
+          color: #fff;
+          font-size: 1.6rem;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

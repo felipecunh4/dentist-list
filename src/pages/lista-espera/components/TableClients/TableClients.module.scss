@@ -1,0 +1,73 @@
+.container {
+  width: 100%;
+
+  padding: 18px 0 55px;
+
+  background-color: #e5e5e5;
+
+  .title {
+    width: 100%;
+
+    text-align: center;
+    font-size: 2.2rem;
+
+    margin-top: 0;
+  }
+
+  .table {
+    width: 80%;
+
+    font-size: 1.6rem;
+
+    margin: 0 auto;
+
+    .tbody {
+      .tableRow:nth-of-type(odd) {
+        background-color: #fff;
+      }
+
+      .tableRow {
+        display: flex;
+
+        padding: 8px 0;
+
+        .position {
+          font-weight: bold;
+
+          margin: 0 15px;
+        }
+
+        .buttonsWrapper {
+          display: flex;
+
+          margin: 0 15px 0 auto;
+
+          .btn {
+            color: #000;
+            text-align: center;
+            font-size: 1.4rem;
+
+            padding: 5px 8px;
+            border: 0;
+            box-sizing: border-box;
+              
+            background-color: #ccc;
+            border-radius: 5px;
+
+            transition: 0.3s;
+              
+            cursor: pointer;
+          
+            &:hover {
+              background-color: darken(#ccc, 10);
+            }
+
+            +.btn {
+              margin-left: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

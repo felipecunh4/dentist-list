@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
-    "target": "es5",
+    "target": "es2020",
     "lib": [
       "dom",
       "dom.iterable",
@@ -11,13 +10,31 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "noEmit": false,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "downlevelIteration": true,
+    "baseUrl": ".",
+    "paths": {
+      "~components/*":["src/components/*"],
+      "~styles/*":["src/styles/*"],
+      "~store/*":["src/store/*"],
+      "~snippets/*":["src/snippets/*"],
+      "~interfaces/*":["src/interfaces/*"],
+      "~services/*":["src/services/*"],
+      "~transformer/*":["src/transformer/*"],
+      "~constants/*":["src/constants/*"],
+      "~utils/*":["src/utils/*"],
+      "~hooks/*":["src/hooks/*"],
+      "~types/*":["src/types/*"],
+      "~assets/*":["src/assets/*"],
+      "~enums/*":["src/enums/*"],
+      "~zustand/*":["src/zustand/*"],
+    }
   },
   "include": [
     "next-env.d.ts",

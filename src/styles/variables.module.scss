@@ -1,0 +1,21 @@
+@use './breakpoints';
+@use './functions';
+
+$primary: #6444cf;
+$text: #0e0e0e;
+
+:export {
+  from320: functions.strip-unit(breakpoints.$smartphoneExtraSmall);
+  from360: functions.strip-unit(breakpoints.$smartphoneSmall);
+  from400: functions.strip-unit(breakpoints.$smartphoneMedium);
+  from480: functions.strip-unit(breakpoints.$smartphoneLarge);
+  from600: functions.strip-unit(breakpoints.$tabletSmall);
+  from720: functions.strip-unit(breakpoints.$tabletMedium);
+  from840: functions.strip-unit(breakpoints.$tabletLarge);
+  from960: functions.strip-unit(breakpoints.$pcExtraSmall);
+  from1024: functions.strip-unit(breakpoints.$pcSmall);
+  from1280: functions.strip-unit(breakpoints.$pcMedium);
+  from1440: functions.strip-unit(breakpoints.$pcLarge);
+  from1600: functions.strip-unit(breakpoints.$pcExtraLarge);
+  from1920: functions.strip-unit(breakpoints.$pcXExtraLarge);
+}

@@ -1,0 +1,28 @@
+.btn {
+  width: 100%;
+
+  color: #fff;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 0.9;
+
+  padding: 21px 55px;
+  border: 0;
+
+  background-color: transparent;
+  border-radius: 5px;
+
+  transition: all 0.3s ease;
+
+  cursor: pointer;
+    
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}

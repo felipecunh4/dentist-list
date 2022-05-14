@@ -1,11 +1,14 @@
 module.exports = {
-  testEnvironment: 'jsdom',
-  testPathIgnorePatterns: ['/node_modules/', '/.next/'],
-  collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.ts(x)?', '!src/**/stories.tsx'],
-  setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
+  roots: ['<rootDir>'],
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  testPathIgnorePatterns: ['<rootDir>[/\\\\](node_modules|.next)[/\\\\]'],
+  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$'],
+  transform: {
+    '^.+\\.(ts|tsx)$': 'babel-jest',
+  },
+  watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   moduleNameMapper: {
-    '^styled-components':
-      '<rootDir>/node_modules/styled-components/dist/styled-components.browser.cjs.js'
-  }
+    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js',
+  },
 };

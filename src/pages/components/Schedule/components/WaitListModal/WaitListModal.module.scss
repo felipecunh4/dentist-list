@@ -1,0 +1,78 @@
+.container {
+  width: 550px;
+
+  .content {
+    .titleWrapper {
+      padding: 21px 0 21px 21px;
+
+      background-color: #eaeaea;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+
+      .title {
+        font-size: 2.1rem;
+
+        margin: 0;
+      }
+    }
+
+    .inputContainer {
+      padding: 21px 0 0;
+
+      .inputWrapper {
+        margin-bottom: 15px;
+        padding-left: 21px;
+
+        .inputName {
+          font-size: 1.4rem;
+          font-weight: bold;
+        }
+
+        .input {
+          width: 115px;
+
+          font-size: 1.4rem;
+
+          margin-left: 8px;
+
+          &.name {
+            width: 80%;
+          }
+
+          &.age {
+            width: 35px;
+          }
+        }
+
+        .ageText {
+          font-size: 1.2rem;
+          font-style: italic;
+
+          margin-left: 3px;
+        }
+      }
+
+      .btnWrapper {
+        display: flex;
+  
+        justify-content: flex-end;
+  
+        padding: 13px 21px;
+  
+        background-color: #eaeaea;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+  
+        .btn {
+          width: 120px;
+  
+          font-size: 1.4rem;
+  
+          padding: 8px 0;
+  
+          background-color: #0582ad;
+        }
+      }
+    }
+  }
+}
