@@ -1,18 +1,14 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-import { AppProps } from 'next/dist/next-server/lib/router/router';
+import { AppProps } from 'next/app';
 
 import { wrapper } from '~store/index';
 
 import '~styles/index.scss';
 
-const queryClient = new QueryClient();
-
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: any) {
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Component {...pageProps} />
-    </QueryClientProvider>
+    </>
   );
 }
 

@@ -92,15 +92,16 @@ function WaitListModal(props: IWaitListModalProps) {
             </div>
             <div className={scss.inputWrapper}>
               <span className={scss.inputName}>Telefone</span>
-              <InputMask
+              <input
+                ref={register({
+                  required: true,
+                })}
                 id="phone"
                 name="phone"
-                mask="(99) 99999-9999"
+                type="text"
+                className={[scss.input, scss.name].join(' ')}
                 placeholder="(00) 00000-0000"
-                className={scss.input}
-              >
-                {(inputProps: IInputMaskProps) => renderInputField(inputProps)}
-              </InputMask>
+              />
             </div>
             <div className={scss.inputWrapper}>
               <span className={scss.inputName}>Sexo</span>
@@ -116,16 +117,17 @@ function WaitListModal(props: IWaitListModalProps) {
             </div>
             <div className={scss.inputWrapper}>
               <span className={scss.inputName}>Nascimento</span>
-              <InputMask
+              <input
+                ref={register({
+                  required: true,
+                })}
                 id="birth"
                 name="birth"
-                mask="99/99/9999"
+                type="text"
+                className={[scss.input, scss.name].join(' ')}
                 placeholder="00/00/0000"
-                className={scss.input}
                 onBlur={handleAgeValue}
-              >
-                {(inputProps: IInputMaskProps) => renderInputField(inputProps)}
-              </InputMask>
+              />
               <input
                 type="text"
                 value={age}

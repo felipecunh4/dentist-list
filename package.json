@@ -48,6 +48,7 @@
     "@graphql-codegen/typescript": "^2.4.11",
     "@graphql-codegen/typescript-operations": "^2.4.0",
     "@types/jest": "^26.0.24",
+    "@types/lodash.isundefined": "^3.0.7",
     "@types/next": "^9.0.0",
     "@types/next-redux-wrapper": "^3.0.0",
     "@types/react": "^17.0.8",
