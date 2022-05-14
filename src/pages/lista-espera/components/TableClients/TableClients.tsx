@@ -1,18 +1,40 @@
-import { ITableClientsProps } from './types';
+import { useState } from 'react';
+
+import { IClientData } from 'src/pages/components/WaitListModal/types';
+import WaitListModal from 'src/pages/components/WaitListModal/WaitListModal';
+
+import { PatientService } from '~services/api/patient';
+
+import { IPatientUpdate, ITableClientsProps } from './types';
 
 import scss from './TableClients.module.scss';
 
 function TableClients(props: ITableClientsProps) {
-  const onUpdatePatient = (id: string) => {
-    console.log('id', id);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [patient, setPatient] = useState({} as IPatientUpdate);
+  const [patientsList, setPatientsList] = useState(props.data);
+
+  const onUpdateSubmit = async (data: IClientData) => {
+    await PatientService.update(patient.id, data);
   };
 
-  const onDeletePatient = (id: string) => {
-    console.log('id', id);
+  const onUpdatePatient = (patientInfo: IPatientUpdate) => {
+    console.log('id', patientInfo);
+    setPatient(patientInfo);
+    setIsOpen(true);
+  };
+
+  const onDeletePatient = async (id: string) => {
+    setIsDisabled(true);
+    const patientsListUpdated = patientsList.filter((p) => p.id !== id);
+    await PatientService.delete(id);
+    setPatientsList(patientsListUpdated);
+    setIsDisabled(false);
   };
 
   const renderClients = () =>
-    props.data.map((client, idx) => (
+    patientsList.map((client, idx) => (
       <tr className={scss.tableRow} key={client.id}>
         <td className={scss.position}>{idx + 1}</td>
         <td>{client.name}</td>
@@ -20,9 +42,10 @@ function TableClients(props: ITableClientsProps) {
           <button
             type="button"
             onClick={() => {
-              onUpdatePatient(client.id);
+              onUpdatePatient(client);
             }}
             className={scss.btn}
+            disabled={isDisabled}
           >
             Editar
           </button>
@@ -32,6 +55,7 @@ function TableClients(props: ITableClientsProps) {
               onDeletePatient(client.id);
             }}
             className={scss.btn}
+            disabled={isDisabled}
           >
             Deletar
           </button>
@@ -45,6 +69,14 @@ function TableClients(props: ITableClientsProps) {
       <table className={scss.table}>
         <tbody className={scss.tbody}>{renderClients()}</tbody>
       </table>
+      <WaitListModal
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        patient={patient.id ? patient : undefined}
+        onUpdate={onUpdateSubmit}
+      />
     </div>
   );
 }

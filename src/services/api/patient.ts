@@ -1,4 +1,4 @@
-import { IClientData } from 'src/pages/components/Schedule/components/WaitListModal/types';
+import { IClientData } from 'src/pages/components/WaitListModal/types';
 
 import { baseGraphqlCms } from '..';
 
@@ -34,4 +34,40 @@ export class PatientService {
       throw new Error('PatientService.publish error');
     }
   };
+
+  static delete = async (id: string) => {
+    try {
+      const item = {
+        operationName: 'deleteDentistList',
+        query: `mutation deleteDentistList {\n deleteDentistList(where: {id: "${id}"}) {\n id\n }\n}`,
+      };
+
+      const { data } = await baseGraphqlCms.post('', item);
+
+      return data;
+    } catch (err) {
+      console.log(err);
+      throw new Error('PatientService.delete error');
+    }
+  };
+
+  static update = async (id: string, client: IClientData) => {
+    try {
+      const item = {
+        operationName: 'deleteDentistList',
+        query: `mutation updateDentistList {\n updateDentistList(\n data: {birth: "${client.birth}", gender: "${client.gender}", name: "${client.name}", phone: "${client.phone}"}\n where: {id: "${id}"}\n)`,
+      };
+
+      const { data } = await baseGraphqlCms.post('', item);
+
+      return data;
+    } catch (err) {
+      console.log(err);
+      throw new Error('PatientService.update error');
+    }
+  };
+
+  /*
+  
+} */
 }

@@ -1,5 +1,6 @@
 .container {
   width: 100%;
+  min-height: calc(100vh - 250px);
 
   padding: 18px 0 55px;
 
@@ -64,6 +65,10 @@
 
             +.btn {
               margin-left: 8px;
+            }
+
+            &:disabled {
+              cursor: not-allowed;
             }
           }
         }

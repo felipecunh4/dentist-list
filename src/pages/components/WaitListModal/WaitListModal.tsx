@@ -17,7 +17,7 @@ function WaitListModal(props: IWaitListModalProps) {
   const [age, setAge] = useState('00');
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { watch, register, reset, handleSubmit } = useForm<IClientData>();
+  const { watch, register, reset, handleSubmit, setValue } = useForm<IClientData>();
 
   const onModalClose = () => {
     setIsOpen(false);
@@ -27,8 +27,12 @@ function WaitListModal(props: IWaitListModalProps) {
 
   const onSubmit = async (data: IClientData) => {
     setIsLoading(true);
-    const res = await PatientService.create(data);
-    await PatientService.publish(res.id);
+    if (props.patient && props.onUpdate) {
+      props.onUpdate(data);
+    } else {
+      const res = await PatientService.create(data);
+      await PatientService.publish(res.id);
+    }
     setIsLoading(false);
     onModalClose();
   };
@@ -50,6 +54,20 @@ function WaitListModal(props: IWaitListModalProps) {
   useEffect(() => {
     setIsOpen(props.isOpen);
   }, [props.isOpen]);
+
+  useEffect(() => {
+    if (props.patient) {
+      setValue('name', props.patient.name);
+      setValue('phone', props.patient.phone);
+      setValue('birth', props.patient.birth);
+      setValue('gender', props.patient.gender);
+
+      const year = props.patient.birth.split('/').pop();
+      const today = new Date();
+
+      setAge(`${today.getFullYear() - parseInt(year!, 10)}`);
+    }
+  }, [props.patient, setValue]);
 
   return (
     <Modal isOpen={isOpen} onClose={onModalClose} className={scss.container}>

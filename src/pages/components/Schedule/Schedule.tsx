@@ -7,7 +7,7 @@ import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 
 import Button from '~components/Button/Button';
 
-import WaitListModal from './components/WaitListModal/WaitListModal';
+import WaitListModal from '../WaitListModal/WaitListModal';
 
 import scss from './Schedule.module.scss';
 
