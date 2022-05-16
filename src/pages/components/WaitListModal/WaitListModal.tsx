@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { FocusEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 
 import Loading from 'src/components/Loading/Loading';
 
 import { PatientService } from '~services/api/patient';
+import { birthDateRegex, phoneRegex } from '~utils/validation';
 
 import { IClientData, IInputMaskProps, IWaitListModalProps } from './types';
 
@@ -17,12 +18,60 @@ function WaitListModal(props: IWaitListModalProps) {
   const [age, setAge] = useState('00');
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { watch, register, reset, handleSubmit, setValue } = useForm<IClientData>();
+  const { watch, register, reset, handleSubmit, setValue, errors, setError } =
+    useForm<IClientData>();
+
+  const handleAgeValue = (birth: string) => {
+    const currentYear = new Date().getFullYear();
+    const birthYear = parseInt(birth.split('/').pop()!, 10);
+
+    if (birthYear < currentYear) {
+      setAge(`${currentYear - birthYear}`);
+    } else {
+      setError('birth', { type: 'manual', message: 'Insira uma data válida' });
+    }
+  };
 
   const onModalClose = () => {
     setIsOpen(false);
     props.onClose();
     reset();
+  };
+
+  const onPhoneBlur = (e: FocusEvent<HTMLInputElement>) => {
+    let phone = e.target.value.replace(/\D/g, '');
+    if (phone.length > 0) {
+      if (phone.length === 10) {
+        const value = phone.match(/(\d{2})(\d{4})(\d{4})/);
+        phone = `(${value![1]}) ${value![2]}-${value![3]}`;
+        setValue('phone', phone);
+      } else if (phone.length >= 11) {
+        const value = phone.match(/(\d{2})(\d{5})(\d{4})/);
+        phone = `(${value![1]}) ${value![2]}-${value![3]}`;
+        setValue('phone', phone);
+      } else {
+        setError('phone', { type: 'manual', message: 'Insira um telefone válido' });
+      }
+    } else {
+      setError('phone', { type: 'manual', message: 'Insira um telefone válido' });
+    }
+  };
+
+  const onBirthBlur = (e: FocusEvent<HTMLInputElement>) => {
+    let birth = e.target.value.replace(/\D/g, '');
+    if (birth.length > 0) {
+      if (birth.length >= 8) {
+        const value = birth.match(/(\d{2})(\d{2})(\d{4})/);
+        birth = `${value![1]}/${value![2]}/${value![3]}`;
+        setValue('birth', birth);
+
+        handleAgeValue(birth);
+      } else {
+        setError('birth', { type: 'manual', message: 'Insira uma data válida' });
+      }
+    } else {
+      setError('birth', { type: 'manual', message: 'Insira uma data válida' });
+    }
   };
 
   const onSubmit = async (data: IClientData) => {
@@ -36,20 +85,6 @@ function WaitListModal(props: IWaitListModalProps) {
     setIsLoading(false);
     onModalClose();
   };
-
-  const handleAgeValue = () => {
-    const birth = watch('birth');
-    if (birth.length === 10) {
-      const year = birth.split('/').pop();
-      const today = new Date();
-
-      setAge(`${today.getFullYear() - parseInt(year!, 10)}`);
-    }
-  };
-
-  const renderInputField = (inputProps: IInputMaskProps) => (
-    <input ref={register({ required: true })} type="tel" {...inputProps} />
-  );
 
   useEffect(() => {
     setIsOpen(props.isOpen);
@@ -76,8 +111,8 @@ function WaitListModal(props: IWaitListModalProps) {
           <div className={scss.titleWrapper}>
             <h3 className={scss.title}>Informações do paciente</h3>
           </div>
-          <form className={scss.inputContainer} onSubmit={handleSubmit(onSubmit)}>
-            <div className={scss.inputWrapper}>
+          <form className={scss.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={scss.inputContainer}>
               <span className={scss.inputName}>Nome</span>
               <input
                 ref={register({
@@ -90,44 +125,66 @@ function WaitListModal(props: IWaitListModalProps) {
                 placeholder="Nome completo do paciente"
               />
             </div>
-            <div className={scss.inputWrapper}>
+            <div className={scss.inputContainer}>
               <span className={scss.inputName}>Telefone</span>
-              <input
-                ref={register({
-                  required: true,
-                })}
-                id="phone"
-                name="phone"
-                type="text"
-                className={[scss.input, scss.name].join(' ')}
-                placeholder="(00) 00000-0000"
-              />
+              <div className={scss.inputWrapper}>
+                <input
+                  ref={register({
+                    required: true,
+                    pattern: {
+                      value: phoneRegex,
+                      message: 'Insira uma telefone válida',
+                    },
+                  })}
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  className={scss.input}
+                  placeholder="(00) 00000-0000"
+                  onBlur={onPhoneBlur}
+                />
+                {errors.phone ? <span className={scss.error}>{errors.phone?.message}</span> : <></>}
+              </div>
             </div>
-            <div className={scss.inputWrapper}>
+            <div className={scss.inputContainer}>
               <span className={scss.inputName}>Sexo</span>
-              <input
+              <select
                 ref={register({
                   required: true,
                 })}
                 id="gender"
                 name="gender"
-                type="text"
                 className={scss.input}
-              />
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Selecione
+                </option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Outro">Outro</option>
+              </select>
             </div>
-            <div className={scss.inputWrapper}>
+            <div className={scss.inputContainer}>
               <span className={scss.inputName}>Nascimento</span>
-              <input
-                ref={register({
-                  required: true,
-                })}
-                id="birth"
-                name="birth"
-                type="text"
-                className={[scss.input, scss.name].join(' ')}
-                placeholder="00/00/0000"
-                onBlur={handleAgeValue}
-              />
+              <div className={scss.inputWrapper}>
+                <input
+                  ref={register({
+                    required: true,
+                    pattern: {
+                      value: birthDateRegex,
+                      message: 'Insira uma data válida',
+                    },
+                  })}
+                  id="birth"
+                  name="birth"
+                  type="text"
+                  className={scss.input}
+                  placeholder="00/00/0000"
+                  onBlur={onBirthBlur}
+                />
+                {errors.birth ? <span className={scss.error}>{errors.birth?.message}</span> : <></>}
+              </div>
               <input
                 type="text"
                 value={age}
