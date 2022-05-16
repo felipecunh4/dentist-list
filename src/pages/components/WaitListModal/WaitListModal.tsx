@@ -78,6 +78,9 @@ function WaitListModal(props: IWaitListModalProps) {
     setIsLoading(true);
     if (props.patient && props.onUpdate) {
       props.onUpdate(data);
+
+      await PatientService.update(props.patient.id, data);
+      await PatientService.publish(props.patient.id);
     } else {
       const res = await PatientService.create(data);
       await PatientService.publish(res.id);
@@ -92,17 +95,12 @@ function WaitListModal(props: IWaitListModalProps) {
 
   useEffect(() => {
     if (props.patient) {
-      setValue('name', props.patient.name);
-      setValue('phone', props.patient.phone);
-      setValue('birth', props.patient.birth);
-      setValue('gender', props.patient.gender);
-
       const year = props.patient.birth.split('/').pop();
       const today = new Date();
 
       setAge(`${today.getFullYear() - parseInt(year!, 10)}`);
     }
-  }, [props.patient, setValue]);
+  }, [props.patient]);
 
   return (
     <Modal isOpen={isOpen} onClose={onModalClose} className={scss.container}>
@@ -119,6 +117,7 @@ function WaitListModal(props: IWaitListModalProps) {
                   required: true,
                 })}
                 id="name"
+                defaultValue={props.patient ? props.patient.name : ''}
                 name="name"
                 type="text"
                 className={[scss.input, scss.name].join(' ')}
@@ -137,6 +136,7 @@ function WaitListModal(props: IWaitListModalProps) {
                     },
                   })}
                   id="phone"
+                  defaultValue={props.patient ? props.patient.phone : ''}
                   name="phone"
                   type="text"
                   className={scss.input}
@@ -153,9 +153,9 @@ function WaitListModal(props: IWaitListModalProps) {
                   required: true,
                 })}
                 id="gender"
+                defaultValue={props.patient ? props.patient.gender : ''}
                 name="gender"
                 className={scss.input}
-                defaultValue=""
               >
                 <option value="" disabled>
                   Selecione
@@ -177,6 +177,7 @@ function WaitListModal(props: IWaitListModalProps) {
                     },
                   })}
                   id="birth"
+                  defaultValue={props.patient ? props.patient.birth : ''}
                   name="birth"
                   type="text"
                   className={scss.input}

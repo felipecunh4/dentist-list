@@ -54,8 +54,20 @@ export class PatientService {
   static update = async (id: string, client: IClientData) => {
     try {
       const item = {
-        operationName: 'deleteDentistList',
-        query: `mutation updateDentistList {\n updateDentistList(\n data: {birth: "${client.birth}", gender: "${client.gender}", name: "${client.name}", phone: "${client.phone}"}\n where: {id: "${id}"}\n)`,
+        operationName: 'updateDentistList',
+        query: `
+        mutation updateDentistList {
+          updateDentistList(
+            data: {birth: "${client.birth}", gender: "${client.gender}", name: "${client.name}", phone: "${client.phone}"}
+            where: {id: "${id}"}
+          ) {
+            id
+            name
+            birth
+            gender
+            phone
+          }
+        }`,
       };
 
       const { data } = await baseGraphqlCms.post('', item);
@@ -66,8 +78,4 @@ export class PatientService {
       throw new Error('PatientService.update error');
     }
   };
-
-  /*
-  
-} */
 }

@@ -16,11 +16,25 @@ function TableClients(props: ITableClientsProps) {
   const [patientsList, setPatientsList] = useState(props.data);
 
   const onUpdateSubmit = async (data: IClientData) => {
-    await PatientService.update(patient.id, data);
+    const newPatientList = patientsList.map((p) => {
+      let newPatient = p;
+      if (p.id === patient.id) {
+        newPatient = {
+          id: p.id,
+          name: data.name,
+          gender: data.gender,
+          phone: data.phone,
+          birth: data.birth,
+        };
+      }
+
+      return newPatient;
+    });
+
+    setPatientsList(newPatientList);
   };
 
   const onUpdatePatient = (patientInfo: IPatientUpdate) => {
-    console.log('id', patientInfo);
     setPatient(patientInfo);
     setIsOpen(true);
   };

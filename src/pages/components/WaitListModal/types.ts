@@ -1,3 +1,5 @@
+import { IPatientUpdate } from 'src/pages/lista-espera/components/TableClients/types';
+
 export interface IClientData {
   name: string;
   phone: string;
@@ -9,7 +11,7 @@ export interface IWaitListModalProps {
   isOpen: boolean;
   onClose: () => void;
   onUpdate?: (patient: IClientData) => void;
-  patient?: IClientData;
+  patient?: IPatientUpdate;
 }
 
 export interface IInputMaskProps {
