@@ -6,9 +6,10 @@ import { GET_PATIENTS } from 'src/graphql/queries';
 
 import { IListaEsperaProps } from './types';
 
-import Footer from '../components/Footer/Footer';
-import Header from '../components/Header/Header';
 import TableClients from './components/TableClients/TableClients';
+
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
 
 function ListaEspera(props: IListaEsperaProps) {
   return (

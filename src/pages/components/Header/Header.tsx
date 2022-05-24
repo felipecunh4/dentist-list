@@ -16,7 +16,7 @@ function Header() {
         <ul className={scss.itemsWrapper}>
           <li className={scss.item}>
             <a className={scss.link} href="/lista-espera">
-              Lista de espera
+              Visualizar lista de espera
             </a>
           </li>
         </ul>

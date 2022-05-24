@@ -1,9 +1,11 @@
+@use 'styles/breakpoints' as *;
+
 .container {
   width: 100%;
 
   display: flex;
 
-  padding: 13px 89px;
+  padding: 8px;
   box-sizing: border-box;
 
   background-color: #0582ad;
@@ -59,5 +61,11 @@
         }
       }
     }
+  }
+}
+
+@include from720 {
+  .container {
+    padding: 13px 89px;
   }
 }

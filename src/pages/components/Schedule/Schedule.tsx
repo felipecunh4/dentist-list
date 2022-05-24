@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Calendar } from 'react-modern-calendar-datepicker';
 
-import { clients } from './data';
+import { clients, myCustomLocale } from './data';
 
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 
@@ -35,7 +35,12 @@ function Schedule() {
       <div className={scss.content}>
         <div className={scss.table}>{renderSchedule()}</div>
         <div className={scss.calendarWrapper}>
-          <Calendar value={null} shouldHighlightWeekends colorPrimary="#0582ad" />
+          <Calendar
+            value={null}
+            shouldHighlightWeekends
+            colorPrimary="#0582ad"
+            locale={myCustomLocale}
+          />
           <Button
             className={scss.btn}
             onClick={() => {
