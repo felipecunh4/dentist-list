@@ -1,4 +1,4 @@
-import { IPatientUpdate } from 'src/pages/lista-espera/components/TableClients/types';
+import { IPatientUpdate } from '../../ViniciusBSI/lista-espera/components/TableClients/types';
 
 export interface IClientData {
   name: string;
